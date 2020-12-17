@@ -51,27 +51,18 @@ function main() {
 }
 function load() {
   window.scrollTo(0,1) //auto-hide-addressbar
-  //feature-detection
-  let ua = navigator.userAgent.toLowerCase()
-  let chromeVersion = ua.match(/chrome\/(\d+)/)
-  //if (!chromeVersion) {
-  if (!('serviceWorker' in navigator) {
+  //feature-detection - add more || !() conditions
+  if (!('serviceWorker' in navigator)) {
     log('Supported browser: Android Chrome/87+\n\nHTTPS|localhost required.\n\n' + navigator.userAgent)
     return;
   }
-  //pndng: error handling in following
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('offlinesw.min.js').then(
-      (reg)=>{
-        main()
-    }).catch(
-      (err)=>{
-        log(JSON.stringify(err))
-    })
-  } else {
-    log('no-sw')
-    main() 
-  }
+  navigator.serviceWorker.register('offlinesw.min.js').then(
+    (reg)=>{
+      main()
+  }).catch(
+    (err)=>{
+      log(JSON.stringify(err))
+  })
 }
 window.addEventListener('load', ()=>{setTimeout(load,0)}, false)
 </script>
