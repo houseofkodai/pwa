@@ -1,0 +1,80 @@
+<!doctype html><html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+<link rel="icon" href="data:;base64,iVBORw0KGgo=">
+
+<!-- https://realfavicongenerator.net/ -->
+<!-- https://cthedot.de/icongen/ -->
+
+<!-- Android -->
+<link rel="manifest" href="/manifest.json">
+<meta name="full-screen" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="theme-color" content="#ffffff">
+
+<!-- iOS -->
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#5bbad5">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="App Name">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar" content="#db4938" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+
+<!-- windoz -->
+<meta name="msapplication-config" content="/browserconfig.xml">
+<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+<meta name="msapplication-TileColor" content="#da532c">
+<style>
+html {margin:0; padding:0; height:100%; width:100%; box-sizing:border-box;}
+body {bottom:0;height:100%;left:0;margin:0;overflow:hidden;position:absolute;top:0;width:100%;display:flex;flex-direction:column;align-items:center;justify-content:center;background-color:yellow;}
+p {margin:1rem;}
+#app{position:fixed; height:100%; width:100%; object-fit:cover;}
+</style>
+<title>PWA</title>
+</head>
+<body>
+<noscript>JavaScript is Disabled. This app needs javascript, enable it and <a href='#' onclick='location.reload(true); return false;'>reload</a>.</noscript>
+
+<script>
+function log(txt) {
+  let el = document.createElement('p')
+  el.innerText = txt
+  document.body.appendChild(el)
+}
+function main() {
+  document.body.style.backgroundColor = "white";
+  log('welcome\n\n')
+}
+function load() {
+  window.scrollTo(0,1) //auto-hide-addressbar
+  //feature-detection
+  let ua = navigator.userAgent.toLowerCase()
+  let chromeVersion = ua.match(/chrome\/(\d+)/)
+  //if (!chromeVersion) {
+  if (!('serviceWorker' in navigator) {
+    log('Supported browser: Android Chrome/87+\n\nHTTPS|localhost required.\n\n' + navigator.userAgent)
+    return;
+  }
+  //pndng: error handling in following
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('offlinesw.min.js').then(
+      (reg)=>{
+        main()
+    }).catch(
+      (err)=>{
+        log(JSON.stringify(err))
+    })
+  } else {
+    log('no-sw')
+    main() 
+  }
+}
+window.addEventListener('load', ()=>{setTimeout(load,0)}, false)
+</script>
+</body>
+</html>
+
